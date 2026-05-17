@@ -1,0 +1,12 @@
+export { Home } from './Home';
+export { Products } from './Products';
+export { ProductDetails } from './ProductDetails';
+export { Cart } from './Cart';
+export { Checkout } from './Checkout';
+export { Login } from './Login';
+export { Register } from './Register';
+export { Profile } from './Profile';
+export { Orders } from './Orders';
+export { AdminProducts } from './AdminProducts';
+export { AdminCategories } from './AdminCategories';
+export { AdminOrders } from './AdminOrders';

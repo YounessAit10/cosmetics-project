@@ -1,0 +1,53 @@
+services:
+
+  nginx:
+    build: ./Nginx
+    container_name: nginx_proxy
+    ports:
+      - "80:80"
+    depends_on:
+      frontend:
+        condition: service_started
+      backend:
+        condition: service_started
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    image: cosmetics-backend
+    expose:
+      - "3000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    image: cosmetics-frontend
+    expose:
+      - "5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cosmetics_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot","-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql_data:
