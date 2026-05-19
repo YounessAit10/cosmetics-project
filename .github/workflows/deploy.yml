@@ -22,7 +22,7 @@ jobs:
         run: docker build -t cosmetics-backend ./backend
 
       - name: Build frontend image
-        run: docker build -t cosmetics-frontend ./frontend
+        run: docker build -t cosmetics-frontend ./FRONTEND
 
 
   deploy:
